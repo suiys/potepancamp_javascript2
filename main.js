@@ -24,7 +24,11 @@ function inputNumber(inputValue) {
   } else if (isOperatorLast() && inputValue == '00') {
     result.innerHTML += '0';
   } else if (isOperatorExist(-2, -1) && result.innerHTML.slice(-1) == '0' && inputValue != '.') {
-    result.innerHTML = result.innerHTML.slice(0, -1) + inputValue;
+    if (inputValue == '00') {
+      result.innerHTML;
+    } else {
+      result.innerHTML = result.innerHTML.slice(0, -1) + inputValue;
+    }
   //演算子の後に小数点が入力されたら自動的に0を補う(e.g. 12+.5 -> 12+0.5)
   } else if (isOperatorLast() && inputValue == '.') {
     result.innerHTML += '0.';
