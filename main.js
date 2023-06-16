@@ -1,9 +1,13 @@
 let result = document.getElementById('result');
+let point = document.getElementById('point');
 let operator = ['+', '-', '*', '/'];
 //イコールを押した後演算子が入力されたら計算を続行し、数値が入力されたら表示をクリアするためのフラグ
 let isCalculated = false;
 
 function inputAc() {
+  if (point.disabled) {
+    point.disabled = false;
+  }
   result.innerHTML = '0';
   isCalculated = false;
 }
@@ -25,13 +29,20 @@ function inputNumber(inputValue) {
   } else if (isOperatorLast() && inputValue == '.') {
     result.innerHTML += '0.';
   } else {
+    //一度小数点を入力したら演算子やACが押下されるまで小数点入力を受け付けなくする
+    if (inputValue == '.') {
+      point.disabled = true;
+    }
     result.innerHTML += inputValue;
   }
 }
 
 function inputOperator(inputValue) {
+  if (point.disabled) {
+    point.disabled = false;
+  }
   //イコールを押して演算した結果に演算子を入力して計算を続行する場合にはフラグをfalseに戻す
-  if (isCalculated == true) {
+  if (isCalculated) {
     isCalculated = false;
   }
   //最初に負数を入力した場合は初期表示の０が消えるようにする
@@ -46,6 +57,9 @@ function inputOperator(inputValue) {
 }
 
 function inputEqual() {
+  if (point.disabled) {
+    point.disabled = false;
+  }
   //計算式の最後が演算子で終わっている場合、末尾の演算子は取り除いて演算する
   if (isOperatorLast()) {
     result.innerHTML = result.innerHTML.slice(0, -1);
